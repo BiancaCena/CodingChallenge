@@ -1,12 +1,10 @@
 // A function for validating a string, returns a boolean
 function isPalindrome(word) {
-	for (
-		let leftChar = 0, rightChar = word.length - 1;
-		leftChar < rightChar;
-		leftChar++, rightChar--
-	) {
-		if (word[leftChar] !== word[rightChar]) return false;
+	for (let i = 0; i < word.length / 2; i++) {
+		//Compares the characters starting from the outermost part of the word up to the center.
+		if (word[i] !== word[word.length - 1 - i]) return false;
 	}
+
 	return true;
 }
 
@@ -15,6 +13,7 @@ function palindromePairs(words) {
 	let result = [];
 
 	for (let i = 0; i < words.length; i++) {
+		//Start j with i + 1 to prevent comparing a word with itself
 		for (let j = i + 1; j < words.length; j++) {
 			const first = words[i] + words[j];
 			const second = words[j] + words[i];
