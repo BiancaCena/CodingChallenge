@@ -1,33 +1,36 @@
 // A function for validating a string, returns a boolean
 function isPalindrome(word) {
-	let reversedWord = "";
-	for (let character of word) {
-		// Insert character on the first part of the reversedWord
-		reversedWord = character + reversedWord;
+	for (let i = 0; i < word.length / 2; i++) {
+		//Compares the characters starting from the outermost part of the word up to the center.
+		if (word[i] !== word[word.length - 1 - i]) return false;
 	}
-	// Check if it is a palindrome.
-	return word === reversedWord;
+
+	return true;
 }
 
-// A function for finding palindrome pairs, returns a [][]int
+// A function for finding palindrome pairs, returns a nested array
 function palindromePairs(words) {
-	let palindromes = [];
+	let result = [];
 
-	// Loop through the array
 	for (let i = 0; i < words.length; i++) {
-		for (let j = words.length - 1; j >= 0; j--) {
-			// Check both words are not the same.
-			if (words[i] !== words[j]) {
-				let combinedWord = words[i] + words[j];
-				// Check combinedWord
-				if (isPalindrome(combinedWord)) {
-					palindromes.push([i, j]);
-				}
+		//Start j with i + 1 to prevent comparing a word with itself
+		for (let j = i + 1; j < words.length; j++) {
+			const first = words[i] + words[j];
+			const second = words[j] + words[i];
+
+			// Check first combined word
+			if (isPalindrome(first)) {
+				result.push([i, j]);
+			}
+
+			// Check second combined word
+			if (isPalindrome(second)) {
+				result.push([j, i]);
 			}
 		}
 	}
 
-	return palindromes;
+	return result;
 }
 
 // Main function
@@ -40,17 +43,14 @@ function main() {
 	});
 
 	let words = [];
-
 	rl.question("Input: ", (input) => {
-		//Split the string into substrings and assign it to words
-		words = input.trim().split(" ");
-		console.log(words);
+		if (input.trim().length !== 0) {
+			//Split the input and assign it to words
+			words = input.split(/\s+/);
 
-		//Proceed only if input is not empty.
-		if (words && words.length > 0) {
 			// Check input
-			result = palindromePairs(words);
-			console.log(result);
+			const result = palindromePairs(words);
+			console.log("Output: " + JSON.stringify(result));
 		}
 		rl.close();
 	});
