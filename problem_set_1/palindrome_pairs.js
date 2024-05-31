@@ -35,15 +35,21 @@ function palindromePairs(words) {
 
 // Main function
 function main() {
-	const readline = require("node:readline");
+	// let words = ["bat", "tab", "cat"];
+	// console.log("Input: " + JSON.stringify(words));
+	// // Check input
+	// const result = palindromePairs(words);
+	// console.log("Output: " + JSON.stringify(result));
 
+	// - - - - - - - FOR MANUAL INPUT - - - - - - - //
+	const readline = require("node:readline");
 	const rl = readline.createInterface({
 		input: process.stdin,
 		output: process.stdout,
 	});
 
 	let words = [];
-	rl.question("Input: ", (input) => {
+	rl.question("Enter a list of words: ", (input) => {
 		if (input.trim().length !== 0) {
 			//Split the input and assign it to words
 			words = input.split(/\s+/);
