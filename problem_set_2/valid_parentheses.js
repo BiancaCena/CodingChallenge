@@ -1,5 +1,10 @@
-const OPEN_PARENTHESES = ["(", "[", "{"];
-const CLOSE_PARENTHESES = [")", "]", "}"];
+const PARENTHESES = {
+	"(": ")",
+	"[": "]",
+	"{": "}",
+};
+const OPEN_PARENTHESES = Object.keys(PARENTHESES);
+const CLOSE_PARENTHESES = Object.values(PARENTHESES);
 
 // A function for checking the string input
 function isValid(input) {
@@ -14,17 +19,13 @@ function isValid(input) {
 			list.push(character);
 		} else if (CLOSE_PARENTHESES.includes(character)) {
 			// If character is a close parenthesis, get previous element in list
-			previousOpen = list.pop();
+			let previousOpen = list.pop();
 
 			/* Returns false if
 			- previousOpen is undefined, first character is invalid (close parenthesis).
-			- Index of previous Open parenthesis (previousOpen) and current close parenthesis (character) does not match.
+			- Value of previous Open parenthesis (previousOpen) and current close parenthesis (character) does not match.
 			 */
-			if (
-				!previousOpen ||
-				OPEN_PARENTHESES.indexOf(previousOpen) !==
-					CLOSE_PARENTHESES.indexOf(character)
-			) {
+			if (!previousOpen || PARENTHESES[previousOpen] !== character) {
 				return false;
 			}
 		} else {
@@ -40,7 +41,6 @@ function isValid(input) {
 // Main function
 function main() {
 	const readline = require("node:readline");
-
 	const rl = readline.createInterface({
 		input: process.stdin,
 		output: process.stdout,
@@ -49,7 +49,7 @@ function main() {
 	rl.question("Input: ", (input) => {
 		//Proceed only if input is not empty.
 		if (input && input.length > 0) {
-			result = isValid(input);
+			let result = isValid(input);
 			console.log("Output: " + result);
 		}
 		rl.close();
