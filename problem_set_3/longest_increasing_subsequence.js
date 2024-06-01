@@ -3,39 +3,36 @@ function lengthOfLIS(numbers) {
 
 	if (numbers.length === 0) return lis;
 
-	// Create an array for each number
-	let nestedArray = [];
-	// let nestedArray = numbers.map((item) => [item]);
-	// let lis = 0;
+	// This will store the lengths of each sequence found in the loop
+	let listOfLengths = [];
 
 	// Using c as the index, run a loop through the nested array
 	for (let c = 0; c < numbers.length; c++) {
-		//Initialize the subArray with the current number
-		let subArray = [numbers[c]];
+		// Set the lastElement to the current element.
+		// lastElement refers to the last element of the sequence.
+		let lastElement = numbers[c];
 
-		// Get the element of current child array
-		// lastElement refers to the last element pushed to the child array
-		let lastElement = subArray[subArray.length - 1];
+		// Initialize a variable responsible for counting the length of sequence.
+		// Add 1 as the default.
+		let count = 1;
 
 		// Using n as the index, run a loop through the numbers array
 		// Start n with the value of c
 		for (let n = c; n < numbers.length; n++) {
 			if (lastElement < numbers[n]) {
-				// Add element to child array
-				subArray.push(numbers[n]);
-				// Update the current element of the child array
+				// Increment the count
+				count++;
+				// Update the lastElement to the current element (numbers[n])
 				lastElement = numbers[n];
 			}
 		}
 
-		// Insert list to nested array
-		nestedArray.push(subArray);
-
-		// Update the lis
-		if (subArray.length > lis)
-			// Update lis
-			lis = Math.max(lis, subArray.length);
+		// Store the length to the list
+		listOfLengths.push(count);
 	}
+
+	// Compare and find the Longest Increasing Subsequence
+	lis = Math.max(...listOfLengths);
 
 	return lis;
 }
@@ -72,6 +69,8 @@ function main() {
 		rl.prompt();
 	}).on("close", function () {
 		const result = lengthOfLIS(numbers);
+
+		console.log("\n\nInput: " + JSON.stringify(numbers));
 		console.log("Output: " + result);
 		process.exit(0);
 	});
