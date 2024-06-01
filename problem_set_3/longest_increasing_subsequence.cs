@@ -11,19 +11,19 @@ namespace Problem.Set.Three
             
         	if (numbers.Length == 0) return lis;
             
-            // Initialize the array of lists, with a list for each number
-            List<int>[] arrayOfLists = new List<int>[numbers.Length];
+            // This will store the lengths of each sequence found in the loop
+            List<int> listOfLengths = new List<int>();
             
             // Using c as the index, run a loop through the array of lists
             for (int c = 0; c < numbers.Length; c++)
             {	
-            	// Add the first element for the current sublist
-                arrayOfLists[c] = new List<int>();
-                arrayOfLists[c].Add(numbers[c]);
-                
-                // Get the element of current child list
-                // lastElement refers to the last element pushed to the child list
+                // Set the lastElement to the current element.
+                // lastElement refers to the last element of the sequence.
                 int lastElement = numbers[c];
+
+                // Initialize a variable responsible for counting the length of sequence.
+                // Add 1 as the default.
+                int count = 1;
                 
                 // Using n as the index, run a loop through the numbers array
                 // Start n with the value of c
@@ -31,17 +31,19 @@ namespace Problem.Set.Three
                 {
                     if (lastElement < numbers[n])
                     {
-                        // Add element to child list
-                        arrayOfLists[c].Add(numbers[n]); 
-                        // Update the current element of the child list
+                        // Increment the count
+                        count++;
+                        // Update the lastElement to the current element (numbers[n])
                         lastElement = numbers[n];
                     }
                 }
 
-                // Update the lis
-                lis = Math.Max(lis, arrayOfLists[c].Count);
-                
+                // Store the length to the list
+                listOfLengths.Add(count);
             }
+
+            // Compare and find the Longest Increasing Subsequence
+            lis = listOfLengths.Max();
             
             return lis;
         }
@@ -69,6 +71,9 @@ namespace Problem.Set.Three
             };
 
             int result = lengthOfLIS(numbers.ToArray());
+            
+            string formattedArray = "[" + string.Join(", ", numbers) + "]";
+            Console.WriteLine("\n\nInput: " + formattedArray);
             Console.WriteLine("Output: " + result);
 
             //Prevent the screen from closing until a key is pressed.
