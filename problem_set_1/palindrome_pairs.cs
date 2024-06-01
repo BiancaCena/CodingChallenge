@@ -7,6 +7,7 @@ namespace Problem.Set.One {
         // A function for validating a string, returns a boolean
         public static bool isPalindrome(string word) {
             for (int i = 0; i < word.Length / 2; i++) {
+                //Compares the characters starting from the outermost part of the word up to the center.
                 if (word[i] != word[word.Length - 1 - i]) return false;
             }
 
@@ -17,7 +18,9 @@ namespace Problem.Set.One {
         public static int[][] palindromePairs(string[] words) {
             List<int[]> result = new List<int[]>();
 
+            //Iterate through the list of words
             for (int i = 0; i < words.Length; i++) {
+                //Start j with i + 1 to prevent comparing a word with itself
                 for (int j = i + 1; j < words.Length; j++) {
                     string first = words[i] + words[j];
                     string second = words[j] + words[i];
@@ -74,6 +77,9 @@ namespace Problem.Set.One {
                 string[] words = input.Split(
                     new char[] { ' ' }, 
                     StringSplitOptions.RemoveEmptyEntries);
+
+                // Use LINQ's Distinct() method to remove duplicates
+                words = words.Distinct().ToArray();
 
                 // Check input
                 int[][] result = palindromePairs(words);
