@@ -48,11 +48,18 @@ function main() {
 		output: process.stdout,
 	});
 
-	let words = [];
+	// Use a Set to store unique words
+	let words = new Set();
+
 	rl.question("Enter a list of words: ", (input) => {
 		if (input.trim().length !== 0) {
-			//Split the input and assign it to words
-			words = input.split(/\s+/);
+			// Split the input and add unique words to the Set
+			input.split(/\s+/).forEach((word) => {
+				words.add(word);
+			});
+
+			// Convert Set back to an array
+			words = Array.from(words);
 
 			// Check input
 			const result = palindromePairs(words);
